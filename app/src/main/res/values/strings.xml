@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">M-Banking</string>
+    <string name="accountText">Account</string>
+    <string name="recentTransactionsText">Recent Transactions</string>
+    <string name="viewAllText">VIEW ALL</string>
 </resources>

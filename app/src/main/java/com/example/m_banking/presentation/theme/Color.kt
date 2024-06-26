@@ -1,4 +1,4 @@
-package com.example.m_banking.ui.theme
+package com.example.m_banking.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
