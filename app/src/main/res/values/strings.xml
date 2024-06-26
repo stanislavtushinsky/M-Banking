@@ -3,4 +3,5 @@
     <string name="accountText">Account</string>
     <string name="recentTransactionsText">Recent Transactions</string>
     <string name="viewAllText">VIEW ALL</string>
+    <string name="selectAccountText">Select the account</string>
 </resources>

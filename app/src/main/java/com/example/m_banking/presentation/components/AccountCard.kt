@@ -1,6 +1,7 @@
 package com.example.m_banking.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,14 +28,18 @@ fun AccountCard(
     title: String,
     accountNumber: String,
     cardNumber: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = CardBackground,
+    onClick: () -> Unit = {}
 ) {
     Card(
         shape = RoundedCornerShape(13.dp),
         colors = CardDefaults.cardColors(
-            containerColor = CardBackground,
+            containerColor = backgroundColor,
             contentColor = DetailsTextColor
-        ), modifier = Modifier.padding(bottom = 23.dp)
+        ), modifier = Modifier
+            .padding(bottom = 23.dp)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
