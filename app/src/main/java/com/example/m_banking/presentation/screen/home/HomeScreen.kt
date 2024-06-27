@@ -1,7 +1,5 @@
 package com.example.m_banking.presentation.screen.home
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +35,17 @@ import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.AccountCard
 import com.example.m_banking.presentation.components.TransactionCard
 import com.example.m_banking.presentation.screen.accountSelection.AccountSelection
+import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionViewModel
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(
+    navController: NavHostController,
+    transactionViewModel: DetailsTransactionViewModel = koinViewModel()
+) {
     val dataRepository = DataRepositoryImpl()
     val accountCards = dataRepository.getAccountCards()
     val transactionCards = dataRepository.getTransactions()
@@ -115,10 +117,14 @@ fun HomeScreen(navController: NavHostController) {
             ) {
                 itemsIndexed(items = transactionCards) { index, item ->
                     TransactionCard(
-                        appliedCompany = transactionCards.first().appliedCompany,
-                        date = transactionCards.first().date,
-                        status = transactionCards.first().status,
-                        amount = transactionCards.first().amount
+                        appliedCompany = item.appliedCompany,
+                        date = item.date,
+                        status = item.status,
+                        amount = item.amount,
+                        onClick = {
+                            transactionViewModel.selectTransaction(item)
+                            navController.navigate("detailsTransaction")
+                        }
                     )
                     if (index < transactionCards.lastIndex)
                         Divider(

@@ -1,4 +1,4 @@
-package com.example.m_banking.presentation.screen.addTransaction
+package com.example.m_banking.presentation.screen.detailsTransaction
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -29,16 +27,15 @@ import com.example.m_banking.R
 import com.example.m_banking.presentation.components.ScrollableColumn
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTransactionScreen(navController: NavHostController) {
-    var appliedCompany by remember { mutableStateOf("") }
-    var number by remember { mutableStateOf("") }
-    var date by remember { mutableStateOf("") }
-    var status by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
-    val isInputEmpty = appliedCompany.isEmpty() || number.isEmpty() || date.isEmpty() || status.isEmpty() || amount.isEmpty()
+fun DetailsTransactionScreen(
+    navController: NavHostController,
+    transactionViewModel: DetailsTransactionViewModel = koinViewModel()
+) {
+    val transaction by transactionViewModel.selectedTransaction.collectAsState()
 
     Column(
         modifier = Modifier
@@ -61,8 +58,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = appliedCompany,
-                onValueChange = { appliedCompany = it },
+                value = transaction.appliedCompany,
+                onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
@@ -72,7 +69,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                readOnly = true
             )
             Text(
                 text = stringResource(id = R.string.transactionNumber),
@@ -80,8 +78,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = number,
-                onValueChange = { number = it },
+                value = transaction.number,
+                onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
@@ -91,7 +89,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                readOnly = true
             )
             Text(
                 text = stringResource(id = R.string.dateText),
@@ -99,8 +98,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = date,
-                onValueChange = { date = it },
+                value = transaction.date.toString(),
+                onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
@@ -110,7 +109,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                readOnly = true
             )
             Text(
                 text = stringResource(id = R.string.transactionStatusText),
@@ -118,8 +118,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = status,
-                onValueChange = { status = it },
+                value = transaction.status,
+                onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
@@ -129,7 +129,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                readOnly = true
             )
             Text(
                 text = stringResource(id = R.string.amountText),
@@ -137,8 +138,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = amount,
-                onValueChange = { amount = it }, modifier = Modifier.fillMaxWidth(),
+                value = transaction.amount.toString(),
+                onValueChange = {}, modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
                     focusedTextColor = Color.White,
@@ -147,7 +148,8 @@ fun AddTransactionScreen(navController: NavHostController) {
                     focusedBorderColor = Color.White,
                     unfocusedBorderColor = Color.White
                 ),
-                singleLine = true
+                singleLine = true,
+                readOnly = true
             )
             Button(
                 onClick = {
@@ -161,7 +163,6 @@ fun AddTransactionScreen(navController: NavHostController) {
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(10.dp),
-                enabled = !isInputEmpty
             ) {
                 Text(text = stringResource(id = R.string.submitButtonText))
             }
