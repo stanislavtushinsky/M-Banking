@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,8 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.AccountCard
@@ -44,7 +45,7 @@ import com.example.m_banking.presentation.theme.Typography
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     val dataRepository = DataRepositoryImpl()
     val accountCards = dataRepository.getAccountCards()
     val transactionCards = dataRepository.getTransactions()
@@ -73,7 +74,6 @@ fun HomeScreen() {
                 .weight(0.18f),
             onClick = {
                 isSheetOpen = true
-                Log.i(TAG, "onClickButton HomeScreen()")
             }
         )
         if (isSheetOpen) {
@@ -97,7 +97,10 @@ fun HomeScreen() {
             Text(
                 text = stringResource(id = R.string.viewAllText),
                 color = ButtonBackground,
-                style = Typography.labelSmall
+                style = Typography.labelSmall,
+                modifier = Modifier.clickable {
+                    navController.navigate("allTransactions")
+                }
             )
         }
         Card(
@@ -146,12 +149,4 @@ fun HomeScreen() {
             )
         }
     }
-}
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(showSystemUi = true)
-@Composable
-fun onPreview() {
-    HomeScreen()
 }
