@@ -3,6 +3,7 @@ package com.example.m_banking.presentation.screen.allTransactions
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.TransactionCard
@@ -31,7 +33,7 @@ import com.example.m_banking.presentation.theme.Typography
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AllTransactionsScreen() {
+fun AllTransactionsScreen(navController: NavHostController) {
     val dataRepository = DataRepositoryImpl()
     val transactionCards = dataRepository.getTransactions()
     Column {
@@ -47,6 +49,11 @@ fun AllTransactionsScreen() {
                 contentDescription = null,
                 modifier = Modifier
                     .size(24.dp)
+                    .clickable {
+                        navController.navigate("home") {
+                            popUpTo("home") { inclusive = true }
+                        }
+                    }
             )
             Text(
                 text = stringResource(id = R.string.allTransactionsText),
