@@ -36,6 +36,7 @@ import com.example.m_banking.presentation.theme.Typography
 fun AllTransactionsScreen(navController: NavHostController) {
     val dataRepository = DataRepositoryImpl()
     val transactionCards = dataRepository.getTransactions()
+
     Column {
         Row(
             modifier = Modifier
