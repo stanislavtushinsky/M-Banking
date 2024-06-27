@@ -164,7 +164,7 @@ fun DetailsTransactionScreen(
                 ),
                 shape = RoundedCornerShape(10.dp),
             ) {
-                Text(text = stringResource(id = R.string.submitButtonText))
+                Text(text = stringResource(id = R.string.okayButtonText))
             }
         }
     }
