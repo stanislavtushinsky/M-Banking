@@ -16,11 +16,9 @@ import org.koin.androidx.compose.koinViewModel
 fun AppNavigation(
     navController: NavHostController
 ) {
-    val transactionViewModel: DetailsTransactionViewModel = koinViewModel()
-
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
-            HomeScreen(navController = navController, transactionViewModel = transactionViewModel)
+            HomeScreen(navController = navController)
         }
         composable("allTransactions") {
             AllTransactionsScreen(navController = navController)
@@ -30,8 +28,7 @@ fun AppNavigation(
         }
         composable("detailsTransaction") {
             DetailsTransactionScreen(
-                navController = navController,
-                transactionViewModel = transactionViewModel
+                navController = navController
             )
         }
     }
