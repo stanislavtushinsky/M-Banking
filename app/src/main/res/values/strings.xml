@@ -5,4 +5,11 @@
     <string name="viewAllText">VIEW ALL</string>
     <string name="selectAccountText">Select the account</string>
     <string name="allTransactionsText">All transactions</string>
+    <string name="transactionText">Transaction</string>
+    <string name="submitButtonText">Okay</string>
+    <string name="amountText">Amount</string>
+    <string name="transactionStatusText">Transaction status</string>
+    <string name="dateText">Date</string>
+    <string name="transactionNumber">Transaction number</string>
+    <string name="transactionAppliedText">Transaction was applied in</string>
 </resources>
