@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
+import com.example.m_banking.presentation.components.ScrollableColumn
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
 import org.koin.androidx.compose.koinViewModel
@@ -167,17 +168,4 @@ fun DetailsTransactionScreen(
             }
         }
     }
-}
-
-@Composable
-fun ScrollableColumn(
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
-) {
-    Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        content = content
-    )
 }
