@@ -22,6 +22,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,6 +37,7 @@ import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.AccountCard
 import com.example.m_banking.presentation.components.TransactionCard
+import com.example.m_banking.presentation.screen.accountSelection.AccountSelection
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
@@ -43,7 +48,9 @@ fun HomeScreen() {
     val dataRepository = DataRepositoryImpl()
     val accountCards = dataRepository.getAccountCards()
     val transactionCards = dataRepository.getTransactions()
-
+    var isSheetOpen by remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,8 +70,18 @@ fun HomeScreen() {
             cardNumber = accountCards.first().cardNumber,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.18f)
+                .weight(0.18f),
+            onClick = {
+                isSheetOpen = true
+                Log.i(TAG, "onClickButton HomeScreen()")
+            }
         )
+        if (isSheetOpen) {
+            AccountSelection(
+                onDismissRequest = { isSheetOpen = false },
+                accountCards = accountCards
+            )
+        }
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
