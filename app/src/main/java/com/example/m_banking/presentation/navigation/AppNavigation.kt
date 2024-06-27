@@ -10,12 +10,13 @@ import com.example.m_banking.presentation.screen.allTransactions.AllTransactions
 import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionScreen
 import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionViewModel
 import com.example.m_banking.presentation.screen.home.HomeScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavigation(
     navController: NavHostController
 ) {
-    val transactionViewModel: DetailsTransactionViewModel = viewModel()
+    val transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
