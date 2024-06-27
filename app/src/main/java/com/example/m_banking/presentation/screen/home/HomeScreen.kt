@@ -39,11 +39,12 @@ import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTrans
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    transactionViewModel: DetailsTransactionViewModel
+    transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 ) {
     val dataRepository = DataRepositoryImpl()
     val accountCards = dataRepository.getAccountCards()

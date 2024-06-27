@@ -26,12 +26,13 @@ import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsTransactionScreen(
     navController: NavHostController,
-    transactionViewModel: DetailsTransactionViewModel
+    transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 ) {
     val transaction by transactionViewModel.selectedTransaction.collectAsState()
 
