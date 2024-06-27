@@ -118,7 +118,10 @@ fun HomeScreen(navController: NavHostController) {
                         appliedCompany = transactionCards.first().appliedCompany,
                         date = transactionCards.first().date,
                         status = transactionCards.first().status,
-                        amount = transactionCards.first().amount
+                        amount = transactionCards.first().amount,
+                        onClick = {
+                            navController.navigate("detailsTransaction")
+                        }
                     )
                     if (index < transactionCards.lastIndex)
                         Divider(

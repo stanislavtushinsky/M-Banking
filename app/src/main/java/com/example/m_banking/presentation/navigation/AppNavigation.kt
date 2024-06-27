@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.m_banking.presentation.screen.addTransaction.AddTransactionScreen
 import com.example.m_banking.presentation.screen.allTransactions.AllTransactionsScreen
+import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionScreen
 import com.example.m_banking.presentation.screen.home.HomeScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -24,6 +25,9 @@ fun AppNavigation(
         }
         composable("addTransaction"){
             AddTransactionScreen(navController = navController)
+        }
+        composable("detailsTransaction"){
+            DetailsTransactionScreen(navController = navController)
         }
     }
 }

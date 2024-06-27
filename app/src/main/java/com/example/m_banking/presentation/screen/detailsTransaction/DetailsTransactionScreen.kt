@@ -24,13 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsTransactionScreen(){
+fun DetailsTransactionScreen(navController: NavHostController) {
     var appliedCompany by remember { mutableStateOf("") }
     var number by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
@@ -152,7 +153,11 @@ fun DetailsTransactionScreen(){
                 readOnly = true
             )
             Button(
-                onClick = {},
+                onClick = {
+                    navController.navigate("home") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = ButtonBackground,
