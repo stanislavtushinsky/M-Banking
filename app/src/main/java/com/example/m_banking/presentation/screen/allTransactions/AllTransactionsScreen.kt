@@ -1,7 +1,5 @@
 package com.example.m_banking.presentation.screen.allTransactions
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +29,6 @@ import com.example.m_banking.presentation.components.TransactionCard
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AllTransactionsScreen(navController: NavHostController) {
     val dataRepository = DataRepositoryImpl()
