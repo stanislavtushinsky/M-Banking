@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.m_banking.presentation.screen.addTransaction.AddTransactionScreen
 import com.example.m_banking.presentation.screen.allTransactions.AllTransactionsScreen
 import com.example.m_banking.presentation.screen.home.HomeScreen
 
@@ -20,6 +21,9 @@ fun AppNavigation(
         }
         composable("allTransactions") {
             AllTransactionsScreen(navController = navController)
+        }
+        composable("addTransaction"){
+            AddTransactionScreen(navController = navController)
         }
     }
 }

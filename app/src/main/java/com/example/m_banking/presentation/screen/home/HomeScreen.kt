@@ -1,8 +1,6 @@
 package com.example.m_banking.presentation.screen.home
 
-import android.content.ContentValues.TAG
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +50,7 @@ fun HomeScreen(navController: NavHostController) {
     var isSheetOpen by remember {
         mutableStateOf(false)
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -137,7 +136,9 @@ fun HomeScreen(navController: NavHostController) {
             .padding(end = 16.dp, bottom = 12.dp)
     ) {
         FloatingActionButton(
-            onClick = { Log.i(TAG, "onClickButton HomeScreen()") },
+            onClick = {
+                navController.navigate("addTransaction")
+            },
             shape = CircleShape,
             containerColor = ButtonBackground,
             contentColor = Color.White,
