@@ -1,35 +1,12 @@
 package com.example.m_banking.presentation.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.m_banking.presentation.screen.addTransaction.AddTransactionScreen
-import com.example.m_banking.presentation.screen.allTransactions.AllTransactionsScreen
-import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionScreen
-import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionViewModel
-import com.example.m_banking.presentation.screen.home.HomeScreen
-import org.koin.androidx.compose.koinViewModel
+enum class Screen {
+    HOME, ALL_TRANSACTIONS, ADD_TRANSACTION, DETAILS_TRANSACTION
+}
 
-@Composable
-fun AppNavigation(
-    navController: NavHostController
-) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeScreen(navController = navController)
-        }
-        composable("allTransactions") {
-            AllTransactionsScreen(navController = navController)
-        }
-        composable("addTransaction") {
-            AddTransactionScreen(navController = navController)
-        }
-        composable("detailsTransaction") {
-            DetailsTransactionScreen(
-                navController = navController
-            )
-        }
-    }
+sealed class NavigationItem(val route: String) {
+    data object Home : NavigationItem(Screen.HOME.name)
+    data object AllTransactions : NavigationItem(Screen.ALL_TRANSACTIONS.name)
+    data object AddTransaction : NavigationItem(Screen.ADD_TRANSACTION.name)
+    data object DetailsTransaction : NavigationItem(Screen.DETAILS_TRANSACTION.name)
 }

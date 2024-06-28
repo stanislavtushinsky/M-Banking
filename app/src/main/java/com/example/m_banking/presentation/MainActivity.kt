@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.example.m_banking.presentation.navigation.AppNavigation
+import com.example.m_banking.presentation.navigation.AppNavHost
 import com.example.m_banking.presentation.theme.MBankingTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,8 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MBankingTheme {
-                val navController = rememberNavController()
-                AppNavigation(navController = navController)
+                AppNavHost(navController = rememberNavController())
             }
         }
     }
