@@ -16,6 +16,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +30,7 @@ import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.TransactionCard
+import com.example.m_banking.presentation.screen.filterTransactions.FilterTransactionsScreen
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
 
@@ -33,6 +38,9 @@ import com.example.m_banking.presentation.theme.Typography
 fun AllTransactionsScreen(navController: NavHostController) {
     val dataRepository = DataRepositoryImpl()
     val transactionCards = dataRepository.getTransactions()
+    var isSheetOpen by remember {
+        mutableStateOf(false)
+    }
 
     Column {
         Row(
@@ -62,8 +70,18 @@ fun AllTransactionsScreen(navController: NavHostController) {
             Image(
                 painter = painterResource(id = R.drawable.baseline_filter_alt_24),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable {
+                        isSheetOpen = true
+                    }
             )
+            if (isSheetOpen) {
+                FilterTransactionsScreen(
+                    onDismissRequest = { isSheetOpen = false },
+                    navController = navController
+                )
+            }
         }
         Card(
             shape = RoundedCornerShape(13.dp),

@@ -11,6 +11,7 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val ButtonBackground = Color(0xFF409CFF)
+val ErrorButtonBackground = Color(0xFF465E79)
 val CardBackground = Color(0xFF1C1C1E)
 val CardSelectedBackground = Color(0xFF193053)
 val ExecutedTextColor = Color(0xFF52AB5B)

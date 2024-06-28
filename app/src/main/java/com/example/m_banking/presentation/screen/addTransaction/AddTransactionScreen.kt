@@ -163,7 +163,7 @@ fun AddTransactionScreen(navController: NavHostController) {
                 shape = RoundedCornerShape(10.dp),
                 enabled = !isInputEmpty
             ) {
-                Text(text = stringResource(id = R.string.submitButtonText))
+                Text(text = stringResource(id = R.string.okayButtonText))
             }
         }
     }
