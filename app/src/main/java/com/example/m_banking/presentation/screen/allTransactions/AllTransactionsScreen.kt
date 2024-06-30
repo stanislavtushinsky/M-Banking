@@ -30,6 +30,7 @@ import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.TransactionCard
+import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.screen.filterTransactions.FilterTransactionsScreen
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
@@ -56,8 +57,8 @@ fun AllTransactionsScreen(navController: NavHostController) {
                 modifier = Modifier
                     .size(24.dp)
                     .clickable {
-                        navController.navigate("home") {
-                            popUpTo("home") { inclusive = true }
+                        navController.navigate(NavigationItem.Home.route) {
+                            popUpTo(NavigationItem.Home.route) { inclusive = true }
                         }
                     }
             )

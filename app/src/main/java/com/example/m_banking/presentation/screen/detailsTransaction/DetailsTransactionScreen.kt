@@ -2,13 +2,10 @@ package com.example.m_banking.presentation.screen.detailsTransaction
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
 import com.example.m_banking.presentation.components.ScrollableColumn
+import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
 import org.koin.androidx.compose.koinViewModel
@@ -153,8 +151,8 @@ fun DetailsTransactionScreen(
             )
             Button(
                 onClick = {
-                    navController.navigate("home") {
-                        popUpTo("home") { inclusive = true }
+                    navController.navigate(NavigationItem.Home.route) {
+                        popUpTo(NavigationItem.Home.route) { inclusive = true }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),

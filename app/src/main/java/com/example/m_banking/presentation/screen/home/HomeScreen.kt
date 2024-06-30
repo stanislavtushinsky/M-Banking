@@ -34,6 +34,7 @@ import com.example.m_banking.R
 import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.AccountCard
 import com.example.m_banking.presentation.components.TransactionCard
+import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.screen.accountSelection.AccountSelection
 import com.example.m_banking.presentation.screen.detailsTransaction.DetailsTransactionViewModel
 import com.example.m_banking.presentation.theme.ButtonBackground
@@ -100,7 +101,7 @@ fun HomeScreen(
                 color = ButtonBackground,
                 style = Typography.labelSmall,
                 modifier = Modifier.clickable {
-                    navController.navigate("allTransactions")
+                    navController.navigate(NavigationItem.AllTransactions.route)
                 }
             )
         }
@@ -123,7 +124,7 @@ fun HomeScreen(
                         amount = item.amount,
                         onClick = {
                             transactionViewModel.selectTransaction(item)
-                            navController.navigate("detailsTransaction")
+                            navController.navigate(NavigationItem.DetailsTransaction.route)
                         }
                     )
                     if (index < transactionCards.lastIndex)
@@ -143,7 +144,7 @@ fun HomeScreen(
     ) {
         FloatingActionButton(
             onClick = {
-                navController.navigate("addTransaction")
+                navController.navigate(NavigationItem.AddTransaction.route)
             },
             shape = CircleShape,
             containerColor = ButtonBackground,
