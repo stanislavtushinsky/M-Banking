@@ -1,12 +1,8 @@
 package com.example.m_banking.presentation.navigation
 
-enum class Screen {
-    HOME, ALL_TRANSACTIONS, ADD_TRANSACTION, DETAILS_TRANSACTION
-}
-
 sealed class NavigationItem(val route: String) {
-    data object Home : NavigationItem(Screen.HOME.name)
-    data object AllTransactions : NavigationItem(Screen.ALL_TRANSACTIONS.name)
-    data object AddTransaction : NavigationItem(Screen.ADD_TRANSACTION.name)
-    data object DetailsTransaction : NavigationItem(Screen.DETAILS_TRANSACTION.name)
+    data object Home : NavigationItem(route = "home_screen")
+    data object AllTransactions : NavigationItem(route = "all_transactions")
+    data object AddTransaction : NavigationItem(route = "add_transactions")
+    data object DetailsTransaction : NavigationItem(route = "details_transaction")
 }

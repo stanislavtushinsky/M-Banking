@@ -15,16 +15,16 @@ fun AppNavHost(
     startDestination: String = NavigationItem.Home.route
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(NavigationItem.Home.route) {
+        composable(route = NavigationItem.Home.route) {
             HomeScreen(navController = navController)
         }
-        composable(NavigationItem.AllTransactions.route) {
+        composable(route = NavigationItem.AllTransactions.route) {
             AllTransactionsScreen(navController = navController)
         }
-        composable(NavigationItem.AddTransaction.route) {
+        composable(route = NavigationItem.AddTransaction.route) {
             AddTransactionScreen(navController = navController)
         }
-        composable(NavigationItem.DetailsTransaction.route) {
+        composable(route = NavigationItem.DetailsTransaction.route) {
             DetailsTransactionScreen(
                 navController = navController
             )
