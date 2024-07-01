@@ -19,6 +19,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
-import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.AccountCard
 import com.example.m_banking.presentation.components.TransactionCard
 import com.example.m_banking.presentation.navigation.NavigationItem
@@ -47,9 +47,9 @@ fun HomeScreen(
     navController: NavHostController,
     transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 ) {
-    val dataRepository = DataRepositoryImpl()
-    val accountCards = dataRepository.getAccountCards()
-    val transactionCards = dataRepository.getTransactions()
+    val transactions by transactionViewModel.transactions.collectAsState()
+    val accountCards by transactionViewModel.accountCards.collectAsState()
+    val selectedCard by transactionViewModel.selectedCard.collectAsState()
     var isSheetOpen by remember {
         mutableStateOf(false)
     }
@@ -68,9 +68,9 @@ fun HomeScreen(
                 .padding(bottom = 12.dp)
         )
         AccountCard(
-            title = accountCards.first().name,
-            accountNumber = accountCards.first().accountNumber,
-            cardNumber = accountCards.first().cardNumber,
+            title = selectedCard?.name ?: "",
+            accountNumber = selectedCard?.accountNumber ?: "",
+            cardNumber = selectedCard?.cardNumber ?: "",
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.18f),
@@ -81,7 +81,11 @@ fun HomeScreen(
         if (isSheetOpen) {
             AccountSelection(
                 onDismissRequest = { isSheetOpen = false },
-                accountCards = accountCards
+                accountCards = accountCards,
+                onAccountSelected = { card ->
+                    transactionViewModel.selectCard(card)
+                    isSheetOpen = false
+                }
             )
         }
         Row(
@@ -101,7 +105,9 @@ fun HomeScreen(
                 color = ButtonBackground,
                 style = Typography.labelSmall,
                 modifier = Modifier.clickable {
-                    navController.navigate(NavigationItem.AllTransactions.route)
+                    selectedCard?.let {
+                        navController.navigate(NavigationItem.AllTransactions.createRoute((it.id)))
+                    }
                 }
             )
         }
@@ -116,7 +122,7 @@ fun HomeScreen(
             LazyColumn(
                 modifier = Modifier.padding(16.dp)
             ) {
-                itemsIndexed(items = transactionCards) { index, item ->
+                itemsIndexed(items = transactions) { index, item ->
                     TransactionCard(
                         appliedCompany = item.appliedCompany,
                         date = item.date,
@@ -127,7 +133,7 @@ fun HomeScreen(
                             navController.navigate(NavigationItem.DetailsTransaction.route)
                         }
                     )
-                    if (index < transactionCards.lastIndex)
+                    if (index < transactions.lastIndex)
                         Divider(
                             color = Color.LightGray,
                             thickness = 0.3.dp,
