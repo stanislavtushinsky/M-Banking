@@ -56,7 +56,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction.appliedCompany,
+                value = transaction?.appliedCompany ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -76,7 +76,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction.number,
+                value = transaction?.number ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -96,7 +96,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction.date.toString(),
+                value = transaction?.date?.toString() ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -116,7 +116,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction.status,
+                value = transaction?.status ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -136,7 +136,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction.amount.toString(),
+                value = transaction?.amount?.toString() ?: "",
                 onValueChange = {}, modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,

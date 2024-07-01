@@ -16,6 +16,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,19 +30,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
-import com.example.m_banking.data.repository.DataRepositoryImpl
 import com.example.m_banking.presentation.components.TransactionCard
 import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.screen.filterTransactions.FilterTransactionsScreen
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AllTransactionsScreen(navController: NavHostController) {
-    val dataRepository = DataRepositoryImpl()
-    val transactionCards = dataRepository.getTransactions()
+fun AllTransactionsScreen(
+    navController: NavHostController,
+    viewModel: AllTransactionsViewModel = koinViewModel(),
+    selectedCardId: Int
+) {
+    val transactions by viewModel.transactions.collectAsState()
     var isSheetOpen by remember {
         mutableStateOf(false)
+    }
+
+    LaunchedEffect(selectedCardId) {
+        viewModel.setSelectedCardId(selectedCardId)
     }
 
     Column {
@@ -96,12 +105,12 @@ fun AllTransactionsScreen(navController: NavHostController) {
             LazyColumn(
                 modifier = Modifier.padding(16.dp)
             ) {
-                items(transactionCards) { _ ->
+                items(transactions) { transaction ->
                     TransactionCard(
-                        appliedCompany = transactionCards.first().appliedCompany,
-                        date = transactionCards.first().date,
-                        status = transactionCards.first().status,
-                        amount = transactionCards.first().amount
+                        appliedCompany = transaction.appliedCompany,
+                        date = transaction.date,
+                        status = transaction.status,
+                        amount = transaction.amount
                     )
                     Divider(
                         color = Color.LightGray,

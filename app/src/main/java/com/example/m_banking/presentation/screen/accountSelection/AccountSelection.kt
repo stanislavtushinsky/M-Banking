@@ -28,7 +28,8 @@ import com.example.m_banking.presentation.theme.Typography
 @Composable
 fun AccountSelection(
     onDismissRequest: () -> Unit,
-    accountCards: List<Card>
+    accountCards: List<Card>,
+    onAccountSelected: (Card) -> Unit
 ) {
     var selectedAccount by remember { mutableStateOf<Card?>(null) }
 
@@ -52,12 +53,13 @@ fun AccountSelection(
             ) {
                 items(accountCards) { account ->
                     AccountCard(
-                        title = accountCards.first().name,
-                        accountNumber = accountCards.first().accountNumber,
-                        cardNumber = accountCards.first().cardNumber,
+                        title = account.name,
+                        accountNumber = account.accountNumber,
+                        cardNumber = account.cardNumber,
                         backgroundColor = if (selectedAccount == account) CardSelectedBackground else CardBackground,
                         onClick = {
                             selectedAccount = account
+                            onAccountSelected(account)
                         }
                     )
                 }
