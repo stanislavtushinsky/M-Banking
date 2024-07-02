@@ -2,13 +2,10 @@ package com.example.m_banking.presentation.screen.addTransaction
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,14 +23,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
+import com.example.m_banking.domain.entity.Transaction
 import com.example.m_banking.presentation.components.ScrollableColumn
 import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTransactionScreen(navController: NavHostController) {
+fun AddTransactionScreen(
+    navController: NavHostController,
+    viewModel: AddTransactionViewModel = koinViewModel()
+) {
     var appliedCompany by remember { mutableStateOf("") }
     var number by remember { mutableStateOf("") }
     var date by remember { mutableStateOf("") }
@@ -152,6 +155,15 @@ fun AddTransactionScreen(navController: NavHostController) {
             )
             Button(
                 onClick = {
+                    val transaction = Transaction(
+                        appliedCompany = appliedCompany,
+                        number = number,
+                        date = LocalDate.parse(date),
+                        status = status,
+                        amount = amount.toDouble(),
+                        cardId = 1
+                    )
+                    viewModel.addTransaction(transaction)
                     navController.navigate(NavigationItem.Home.route) {
                         popUpTo(NavigationItem.Home.route) { inclusive = true }
                     }
