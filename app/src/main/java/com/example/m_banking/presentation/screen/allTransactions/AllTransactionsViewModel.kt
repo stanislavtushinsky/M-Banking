@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.m_banking.domain.entity.Transaction
 import com.example.m_banking.domain.repository.DataRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,14 +21,14 @@ class AllTransactionsViewModel(private val dataRepository: DataRepository) : Vie
     }
 
     fun setSelectedCardId(cardId: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _selectedCardId.emit(cardId)
             fetchTransactions(cardId)
         }
     }
 
     private fun fetchTransactions(cardId: Int? = null) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (cardId != null) {
                 _transactions.value = dataRepository.getTransactions(cardId)
             } else {

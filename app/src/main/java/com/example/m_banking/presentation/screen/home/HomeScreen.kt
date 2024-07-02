@@ -47,9 +47,7 @@ fun HomeScreen(
     navController: NavHostController,
     transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 ) {
-    val transactions by transactionViewModel.transactions.collectAsState()
-    val accountCards by transactionViewModel.accountCards.collectAsState()
-    val selectedCard by transactionViewModel.selectedCard.collectAsState()
+    val state by transactionViewModel.state.collectAsState()
     var isSheetOpen by remember {
         mutableStateOf(false)
     }
@@ -68,9 +66,9 @@ fun HomeScreen(
                 .padding(bottom = 12.dp)
         )
         AccountCard(
-            title = selectedCard?.name ?: "",
-            accountNumber = selectedCard?.accountNumber ?: "",
-            cardNumber = selectedCard?.cardNumber ?: "",
+            title = state.selectedCard?.name ?: "",
+            accountNumber = state.selectedCard?.accountNumber ?: "",
+            cardNumber = state.selectedCard?.cardNumber ?: "",
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.18f),
@@ -81,7 +79,7 @@ fun HomeScreen(
         if (isSheetOpen) {
             AccountSelection(
                 onDismissRequest = { isSheetOpen = false },
-                accountCards = accountCards,
+                accountCards = state.accountCards,
                 onAccountSelected = { card ->
                     transactionViewModel.selectCard(card)
                     isSheetOpen = false
@@ -105,7 +103,7 @@ fun HomeScreen(
                 color = ButtonBackground,
                 style = Typography.labelSmall,
                 modifier = Modifier.clickable {
-                    selectedCard?.let {
+                    state.selectedCard?.let {
                         navController.navigate(NavigationItem.AllTransactions.createRoute((it.id)))
                     }
                 }
@@ -122,7 +120,7 @@ fun HomeScreen(
             LazyColumn(
                 modifier = Modifier.padding(16.dp)
             ) {
-                itemsIndexed(items = transactions) { index, item ->
+                itemsIndexed(items = state.transactions) { index, item ->
                     TransactionCard(
                         appliedCompany = item.appliedCompany,
                         date = item.date,
@@ -133,7 +131,7 @@ fun HomeScreen(
                             navController.navigate(NavigationItem.DetailsTransaction.route)
                         }
                     )
-                    if (index < transactions.lastIndex)
+                    if (index < state.transactions.lastIndex)
                         Divider(
                             color = Color.LightGray,
                             thickness = 0.3.dp,

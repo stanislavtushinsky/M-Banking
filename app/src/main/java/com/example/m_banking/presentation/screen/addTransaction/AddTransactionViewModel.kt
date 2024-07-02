@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.m_banking.domain.entity.Transaction
 import com.example.m_banking.domain.repository.DataRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ class AddTransactionViewModel(private val dataRepository: DataRepository) : View
     val addedTransaction: StateFlow<Transaction> = _addedTransaction
 
     fun addTransaction(transaction: Transaction) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _addedTransaction.emit(transaction)
             dataRepository.addTransaction(transaction)
         }

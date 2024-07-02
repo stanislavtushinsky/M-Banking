@@ -5,49 +5,42 @@ import androidx.lifecycle.viewModelScope
 import com.example.m_banking.domain.entity.Card
 import com.example.m_banking.domain.entity.Transaction
 import com.example.m_banking.domain.repository.DataRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailsTransactionViewModel(private val dataRepository: DataRepository) : ViewModel() {
-    private val _selectedTransaction = MutableStateFlow<Transaction?>(null)
-    val selectedTransaction: StateFlow<Transaction?> = _selectedTransaction
-
-    private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
-    val transactions: StateFlow<List<Transaction>> = _transactions
-
-    private val _accountCards = MutableStateFlow<List<Card>>(emptyList())
-    val accountCards: StateFlow<List<Card>> = _accountCards
-
-    private val _selectedCard = MutableStateFlow<Card?>(null)
-    val selectedCard: StateFlow<Card?> = _selectedCard
+    private val _state = MutableStateFlow(DetailsTransactionViewModelState())
+    val state: StateFlow<DetailsTransactionViewModelState> = _state
 
     init {
         fetchAccountCards()
     }
 
     fun selectTransaction(transaction: Transaction) {
-        viewModelScope.launch {
-            _selectedTransaction.emit(transaction)
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(selectedTransaction = transaction) }
         }
     }
 
     fun selectCard(card: Card) {
-        viewModelScope.launch {
-            _selectedCard.emit(card)
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(selectedCard = card) }
             fetchTransactions(card.id)
         }
     }
 
     private fun fetchTransactions(cardId: Int) {
-        viewModelScope.launch {
-            _transactions.value = dataRepository.getTransactions(cardId)
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(transactions = dataRepository.getTransactions(cardId)) }
         }
     }
 
     private fun fetchAccountCards() {
-        viewModelScope.launch {
-            _accountCards.value = dataRepository.getCards()
+        viewModelScope.launch(Dispatchers.IO) {
+            _state.update { it.copy(accountCards = dataRepository.getCards()) }
         }
     }
 }

@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
-import com.example.m_banking.presentation.components.ScrollableColumn
 import com.example.m_banking.presentation.navigation.NavigationItem
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.Typography
@@ -33,7 +34,7 @@ fun DetailsTransactionScreen(
     navController: NavHostController,
     transactionViewModel: DetailsTransactionViewModel = koinViewModel()
 ) {
-    val transaction by transactionViewModel.selectedTransaction.collectAsState()
+    val state by transactionViewModel.state.collectAsState()
 
     Column(
         modifier = Modifier
@@ -41,9 +42,13 @@ fun DetailsTransactionScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        ScrollableColumn(
+        val scrollState = rememberScrollState()
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.transactionText),
@@ -56,7 +61,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction?.appliedCompany ?: "",
+                value = state.selectedTransaction?.appliedCompany ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -76,7 +81,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction?.number ?: "",
+                value = state.selectedTransaction?.number ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -96,7 +101,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction?.date?.toString() ?: "",
+                value = state.selectedTransaction?.date.toString(),
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -116,7 +121,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction?.status ?: "",
+                value = state.selectedTransaction?.status ?: "",
                 onValueChange = {},
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -136,7 +141,7 @@ fun DetailsTransactionScreen(
                 style = Typography.titleSmall
             )
             OutlinedTextField(
-                value = transaction?.amount?.toString() ?: "",
+                value = state.selectedTransaction?.amount.toString(),
                 onValueChange = {}, modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     disabledTextColor = Color.White,
