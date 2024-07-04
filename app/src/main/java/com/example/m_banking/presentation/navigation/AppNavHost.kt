@@ -20,6 +20,7 @@ fun AppNavHost(
         composable(route = NavigationItem.Home.route) {
             HomeScreen(navController = navController)
         }
+
         composable(
             route = NavigationItem.AllTransactions.route,
             arguments = listOf(navArgument("cardId") { type = NavType.IntType })
@@ -27,9 +28,15 @@ fun AppNavHost(
             val cardId = backStackEntry.arguments?.getInt("cardId") ?: return@composable
             AllTransactionsScreen(navController = navController, selectedCardId = cardId)
         }
-        composable(route = NavigationItem.AddTransaction.route) {
-            AddTransactionScreen(navController = navController)
+
+        composable(
+            route = NavigationItem.AddTransaction.route,
+            arguments = listOf(navArgument("cardId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val cardId = backStackEntry.arguments?.getInt("cardId") ?: return@composable
+            AddTransactionScreen(navController = navController, selectedCardId = cardId)
         }
+
         composable(route = NavigationItem.DetailsTransaction.route) {
             DetailsTransactionScreen(
                 navController = navController

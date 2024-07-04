@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class AddTransactionViewModel(private val dataRepository: DataRepository) : ViewModel() {
+class AddTransactionViewModel(
+    private val dataRepository: DataRepository
+) : ViewModel() {
     private val _addedTransaction = MutableStateFlow(Transaction("", "", LocalDate.now(), "", 0.0, cardId = 1))
     val addedTransaction: StateFlow<Transaction> = _addedTransaction
 

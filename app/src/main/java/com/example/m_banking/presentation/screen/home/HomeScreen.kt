@@ -148,7 +148,12 @@ fun HomeScreen(
     ) {
         FloatingActionButton(
             onClick = {
-                navController.navigate(NavigationItem.AddTransaction.route)
+                navController.navigate(
+                    NavigationItem.AddTransaction.createRoute(
+                        state.selectedCard?.id
+                            ?: 0
+                    )
+                )
             },
             shape = CircleShape,
             containerColor = ButtonBackground,

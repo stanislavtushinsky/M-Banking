@@ -35,6 +35,7 @@ import java.time.LocalDate
 @Composable
 fun AddTransactionScreen(
     navController: NavHostController,
+    selectedCardId: Int,
     viewModel: AddTransactionViewModel = koinViewModel()
 ) {
     var appliedCompany by remember { mutableStateOf("") }
@@ -161,7 +162,7 @@ fun AddTransactionScreen(
                         date = LocalDate.parse(date),
                         status = status,
                         amount = amount.toDouble(),
-                        cardId = 1
+                        cardId = selectedCardId
                     )
                     viewModel.addTransaction(transaction)
                     navController.navigate(NavigationItem.Home.route) {

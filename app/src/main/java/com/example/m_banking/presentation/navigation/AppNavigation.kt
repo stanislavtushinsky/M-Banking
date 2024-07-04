@@ -7,7 +7,9 @@ sealed class NavigationItem(val route: String) {
         fun createRoute(cardId: Int) = "all_transactions/$cardId"
     }
 
-    data object AddTransaction : NavigationItem(route = "add_transactions")
+    data object AddTransaction : NavigationItem(route = "add_transactions/{cardId}") {
+        fun createRoute(cardId: Int) = "add_transactions/$cardId"
+    }
 
     data object DetailsTransaction : NavigationItem(route = "details_transaction")
 }
