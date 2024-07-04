@@ -33,7 +33,6 @@ class AllTransactionsViewModel(private val dataRepository: DataRepository) : Vie
     fun filterTransactionsByDateRange(startDate: String?, endDate: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             val filteredTransactions = dataRepository.getTransactionsByDate(startDate, endDate)
-            Log.i(ContentValues.TAG, "allTransactions VM ${filteredTransactions.size}")
             _transactions.emit(filteredTransactions)
         }
     }
