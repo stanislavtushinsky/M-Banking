@@ -50,6 +50,7 @@ fun AllTransactionsScreen(
 
     LaunchedEffect(selectedCardId) {
         viewModel.setSelectedCardId(selectedCardId)
+        viewModel
     }
 
     Column {

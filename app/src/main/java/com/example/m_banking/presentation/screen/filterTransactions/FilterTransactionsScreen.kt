@@ -30,10 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.example.m_banking.R
+import com.example.m_banking.presentation.navigation.NavigationItem
+import com.example.m_banking.presentation.screen.allTransactions.AllTransactionsViewModel
 import com.example.m_banking.presentation.theme.ButtonBackground
 import com.example.m_banking.presentation.theme.CardBackground
 import com.example.m_banking.presentation.theme.ErrorButtonBackground
 import com.example.m_banking.presentation.theme.Typography
+import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -41,7 +44,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun FilterTransactionsScreen(
     onDismissRequest: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    allTransactionsViewModel: AllTransactionsViewModel = koinViewModel()
 ) {
     var startDate by remember { mutableStateOf("") }
     var endDate by remember { mutableStateOf("") }
@@ -180,8 +184,13 @@ fun FilterTransactionsScreen(
             )
             Button(
                 onClick = {
-                    if (startDate.isNotEmpty() && endDate.isNotEmpty() && isEndDateBeforeStartDate) {
-                        navController.navigate("allTransactions")
+                    if (startDate.isNotEmpty() && endDate.isNotEmpty() && !isEndDateBeforeStartDate) {
+                        allTransactionsViewModel.filterTransactionsByDateRange(startDate, endDate)
+                        navController.navigate(
+                            NavigationItem.AllTransactions.createRoute(
+                                allTransactionsViewModel.selectedCardId.value
+                            )
+                        )
                     }
                 },
                 modifier = Modifier

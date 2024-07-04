@@ -18,6 +18,13 @@ class DataRepositoryImpl(
         return transactionDao.getTransactions(cardId)
     }
 
+    override suspend fun getTransactionsByDate(
+        startDate: String?,
+        endDate: String?
+    ): List<Transaction> {
+        return transactionDao.getTransactionsByDate(startDate, endDate)
+    }
+
     override suspend fun getTransactionById(transactionId: Int): Transaction {
         return transactionDao.getTransactionById(transactionId)
     }
