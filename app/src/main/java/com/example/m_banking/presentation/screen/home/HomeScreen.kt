@@ -120,7 +120,7 @@ fun HomeScreen(
             LazyColumn(
                 modifier = Modifier.padding(16.dp)
             ) {
-                itemsIndexed(items = state.transactions) { index, item ->
+                itemsIndexed(items = state.transactions.take(5)) { index, item ->
                     TransactionCard(
                         appliedCompany = item.appliedCompany,
                         date = item.date,
@@ -131,7 +131,7 @@ fun HomeScreen(
                             navController.navigate(NavigationItem.DetailsTransaction.route)
                         }
                     )
-                    if (index < state.transactions.lastIndex)
+                    if (index < state.transactions.take(5).lastIndex)
                         Divider(
                             color = Color.LightGray,
                             thickness = 0.3.dp,
