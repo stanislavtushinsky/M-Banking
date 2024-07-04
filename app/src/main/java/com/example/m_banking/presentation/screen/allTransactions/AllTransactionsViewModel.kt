@@ -1,5 +1,7 @@
 package com.example.m_banking.presentation.screen.allTransactions
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.m_banking.domain.entity.Transaction
@@ -20,10 +22,19 @@ class AllTransactionsViewModel(private val dataRepository: DataRepository) : Vie
         fetchTransactions()
     }
 
+
     fun setSelectedCardId(cardId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _selectedCardId.emit(cardId)
             fetchTransactions(cardId)
+        }
+    }
+
+    fun filterTransactionsByDateRange(startDate: String?, endDate: String?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val filteredTransactions = dataRepository.getTransactionsByDate(startDate, endDate)
+            Log.i(ContentValues.TAG, "allTransactions VM ${filteredTransactions.size}")
+            _transactions.emit(filteredTransactions)
         }
     }
 
